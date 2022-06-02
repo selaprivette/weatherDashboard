@@ -1,12 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="style.css">
     <title>Weather Dashboard</title>
 </head>
+
 <body>
-    
+    <header class="bg-dark text-light text-center p-2">
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main class="container-fluid">
+        <section class="row">
+            <section class="col-12 col-md-3 p-2 search-column">
+                <form class="border p-2" id="city-search-box">
+                    <h4>Search for a City</h2>
+                        <input id="city" type="text" autofocus="true" class="form-input" />
+                        <button class="btn btn-primary" type="submit">Search</button>
+                </form>
+                <section class="previous-search border" id="previous-search-buttons"></section>
+                </section>
+            <section class="col-12 col-md-9">
+                <section class="row border selected-city" id="current-forecast">
+                    <section class="col-12">
+                        <h2 id="searched-city"></h2>
+                        <section id="current-weather-box" class="list-group"></section>
+                        </section>
+                    </section>
+                <section class="row border" id="five-day-forecast">
+                    <h2 class="col-12" id="forecast"></h2>
+                    <section class="d-flex" id="fiveday-box"></section>
+                </section>
+            </section>
+        </section>
+    </main>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.27.0/moment.min.js"></script>
+    <script src="script.js"></script>
 </body>
+
 </html>

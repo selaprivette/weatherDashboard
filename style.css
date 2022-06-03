@@ -10,18 +10,18 @@
     flex:auto
 }
 
-section.severe{
+span.severe{
     padding: 4px;
     background-color: red;
     color:white;
 }
 
-section.moderate{
+span.moderate{
     padding: 4px;
     background-color: yellow;
 }
 
-section.favorable{
+span.favorable{
     padding: 4px;
     background-color: green;
     color:white;

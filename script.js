@@ -1,17 +1,17 @@
 //establish variables and declare cities array//
 var cities = [];
-var cityBoxEl = document.querySelector('#city-seach-box');
+var cityBoxEl = document.querySelector('#city-search-box');
 var cityEstablishedEl = document.querySelector('#city');
 var weatherBoxEl = document.querySelector('#current-weather-box');
-var citySearchedEl = document.querySelector('#search-city');
-var forcastHeader = document.querySelector('#forecast');
+var citySearchedEl = document.querySelector('#city');
+var forecastHeader = document.querySelector('#forecast');
 var forecastBoxEl = document.querySelector('#fiveday-box');
+var forecastContainerEl = document.querySelector('#five-day-forecast');
 var previousSearchButtonEl = document.querySelector('#previous-search-buttons');
-
 //prevent refresh clear//
 var formSubmitHandler = function (event) {
     event.preventDefault();
-    var city = cityEstablishedEl.ariaValueMax.trim();
+    var city = cityEstablishedEl.value.trim();
     if (city) {
         getCityWeather(city);
         get5Day(city);
@@ -31,51 +31,41 @@ var saveSearch = function () {
 var getCityWeather = function (city) {
     var apiKey = '8b62e1bd62c44925cbf6e9bb8f211dba'
     var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
-
-
     fetch(apiURL)
         .then(function (response) {
             response.json().then(function (data) {
                 displayWeather(data, city);
             });
         });
-
 };
 //clear search//
 var displayWeather = function (weather, searchCity) {
     weatherBoxEl.textContent = '';
     citySearchedEl.textContent = searchCity;
-
     //date section//
     var currentDate = document.createElement('section')
     currentDate.textContent = " (" + moment(weather.dt.value).format("MMM D, YYYY") + ") ";
     citySearchedEl.appendChild(currentDate);
-
     //weather symbols//
     var weatherSymbol = document.createElement('img')
-    weatherSymbol.setAttribute('src', `https://openweathermap.org/img/wn/${weather.weather[0].Symbol}@2x.png`);
+    weatherSymbol.setAttribute("src", "https://openweathermap.org/img/wn/"+weather.weather[0].icon+"@2x.png");
     citySearchedEl.appendChild(weatherSymbol);
-
     //temp section//
     var tempEl = document.createElement('section')
     tempEl.textContent = 'Temperature:' + weather.main.temp + ' °F';
     tempEl.classList = 'list-group-item'
-
     //humidity section//
     var humidityEl = document.createElement("section");
     humidityEl.textContent = "Humidity: " + weather.main.humidity + " %";
     humidityEl.classList = "list-group-item"
-
     //wind section//
     var windEl = document.createElement("section");
     windEl.textContent = "Wind Speed: " + weather.wind.speed + " MPH";
     windEl.classList = "list-group-item"
-
     //append all to weather box//
     weatherBoxEl.appendChild(tempEl);
     weatherBoxEl.appendChild(humidityEl);
     weatherBoxEl.appendChild(windEl);
-
     //weather coordinates//
     var lat = weather.coord.lat;
     var lon = weather.coord.lon;
@@ -91,17 +81,13 @@ var getUvIndex = function (lat, lon) {
                 displayUvIndex(data)
             });
         });
-
 }
-
 var displayUvIndex = function (index) {
-    var uvIndexEl = document.createElement('section');
+    var uvIndexEl = document.createElement('span');
     uvIndexEl.textContent = 'UV Index:'
     uvIndexEl.classList = 'list-group-item'
-
-    uvIndexValue = document.createElement('section')
+    uvIndexValue = document.createElement('span')
     uvIndexValue.textContent = index.value
-
     if (index.value <= 2) {
         uvIndexValue.classList = 'favorable'
     } else if (index.value > 2 && index.value <= 8) {
@@ -110,14 +96,12 @@ var displayUvIndex = function (index) {
     else if (index.value > 8) {
         uvIndexValue.classList = 'severe'
     };
-
     uvIndexEl.appendChild(uvIndexValue);
     weatherBoxEl.appendChild(uvIndexEl);
 }
 var get5Day = function (city) {
     var apiKey = "8b62e1bd62c44925cbf6e9bb8f211dba"
     var apiURL = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&units=imperial&appid=${apiKey}`
-
     fetch(apiURL)
         .then(function (response) {
             response.json().then(function (data) {
@@ -128,29 +112,24 @@ var get5Day = function (city) {
 var display5Day = function (weather) {
     forecastBoxEl.textContent = ""
     forecastHeader.textContent = "5-Day Forecast:";
-
     var forecast = weather.list;
     for (var i = 5; i < forecast.length; i = i + 8) {
         var dailyForecast = forecast[i];
-
         var forecastEl = document.createElement("section");
         forecastEl.classList = "card bg-primary text-light m-2";
-
         //date section//
         var forecastDate = document.createElement("h5")
         forecastDate.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY");
         forecastDate.classList = "card-header text-center"
         forecastEl.appendChild(forecastDate);
-
         //weather symbols//
         var weatherSymbol = document.createElement("img")
         weatherSymbol.classList = "card-body text-center";
-        weatherSymbol.setAttribute("src", `https://openweathermap.org/img/wn/${dailyForecast.weather[0].Symbol}@2x.png`);
+        weatherSymbol.setAttribute("src", `https://openweathermap.org/img/wn/${dailyForecast.weather[0].icon}@2x.png`);
         forecastEl.appendChild(weatherSymbol);
-
         //forcast temp section//
         var forecastTempEl = document.createElement("section");
-        forecastTempEl.classList = "card-body text-center";
+        forecastTempEl.cforecastContainerEllassList = "card-body text-center";
         forecastTempEl.textContent = dailyForecast.main.temp + " °F";
         forecastEl.appendChild(forecastTempEl);
         //forecast humidity section//
@@ -160,7 +139,6 @@ var display5Day = function (weather) {
         forecastEl.appendChild(forecastHumidityEl);
         forecastContainerEl.appendChild(forecastEl);
     }
-
 }
 //previous search buttons//
 var previousSearch = function (previousSearch) {
@@ -169,7 +147,6 @@ var previousSearch = function (previousSearch) {
     previousSearchEl.classList = "d-flex w-100 btn-light border p-2";
     previousSearchEl.setAttribute("data-city", previousSearch)
     previousSearchEl.setAttribute("type", "submit");
-
     previousSearchButtonEl.prepend(previousSearchEl);
 }
 var previousSearchHandler = function (event) {
@@ -181,5 +158,5 @@ var previousSearchHandler = function (event) {
 }
 //event listeners//
 cityBoxEl.addEventListener('submit', formSubmitHandler);
+//$(cityBoxEl).on("submit",formSubmitHandler);
 previousSearchButtonEl.addEventListener('click', previousSearchHandler);
-

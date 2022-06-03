@@ -30,9 +30,10 @@ var saveSearch = function () {
 //weather API//
 var getCityWeather = function (city) {
     var apiKey = '8b62e1bd62c44925cbf6e9bb8f211dba'
-    var apiUrl = 'https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}'
+    var apiURL = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=imperial&appid=${apiKey}`
 
-    fetch(apiUrl)
+
+    fetch(apiURL)
         .then(function (response) {
             response.json().then(function (data) {
                 displayWeather(data, city);
@@ -179,6 +180,6 @@ var previousSearchHandler = function (event) {
     }
 }
 //event listeners//
-cityFormEl.addEventListener("submit", formSumbitHandler);
-previousSearchButtonEl.addEventListener("click", previousSearchHandler);
+cityBoxEl.addEventListener('submit', formSubmitHandler);
+previousSearchButtonEl.addEventListener('click', previousSearchHandler);
 

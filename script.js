@@ -40,6 +40,7 @@ var getCityWeather = function (city) {
 };
 //clear search//
 var displayWeather = function (weather, searchCity) {
+    $(".5day").remove();
     weatherBoxEl.textContent = '';
     citySearchedEl.textContent = searchCity;
     //date section//
@@ -116,7 +117,7 @@ var display5Day = function (weather) {
     for (var i = 5; i < forecast.length; i = i + 8) {
         var dailyForecast = forecast[i];
         var forecastEl = document.createElement("section");
-        forecastEl.classList = "card bg-primary text-light m-2";
+        forecastEl.classList = "card bg-primary text-light m-2 5day";
         //date section//
         var forecastDate = document.createElement("h5")
         forecastDate.textContent = moment.unix(dailyForecast.dt).format("MMM D, YYYY");
